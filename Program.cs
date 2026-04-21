@@ -24,6 +24,24 @@ var state = new PlayerState();
 
 var explorer = new Explorer();
 
+var reachable = explorer.Explore(allRooms, state);
+
+var detector = new SoftLockDetector();
+var locked = detector.FindSoftLocks(allRooms, reachable);
+
+Console.WriteLine("=== SOFT LOCK REPORT ===");
+
+if (locked.Count == 0)
+{
+    Console.WriteLine("OK: no soft-lock detected");
+}
+else
+{
+    Console.WriteLine("Locked rooms:");
+    foreach (var r in locked)
+        Console.WriteLine(r);
+}
+
 var result = explorer.Explore(allRooms, state);
 
 Console.WriteLine("Rooms accessibles :");
