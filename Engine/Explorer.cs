@@ -19,27 +19,27 @@ namespace MapProgressionSimulator.Engine
             {
                 changed = false;
 
-                Console.WriteLine("=== PASS ===");
+                //Console.WriteLine("=== PASS ===");
 
                 foreach (var room in allRooms)
                 {
-                    Console.WriteLine($"Testing {room.Id}");
+                    //Console.WriteLine($"Testing {room.Id}");
                     if (visited.Contains(room.Id))
                     {
-                        Console.WriteLine($"Is already visited {room.Id}");
+                        //Console.WriteLine($"Is already visited {room.Id}");
                         continue;
                     }
 
                     if (CanReach(room, state))
                     {
                         visited.Add(room.Id);
-                        Console.WriteLine($"Visiting {room.Id}");
+                        //Console.WriteLine($"Visiting {room.Id}");
                         changed = true;
 
                         if (room.PowerGiven != null)
                         {
                             state.AddPower(room.PowerGiven);
-                            Console.WriteLine($"Powers: {string.Join(",", state.Powers)}");
+                            //Console.WriteLine($"Powers: {string.Join(",", state.Powers)}");
                         }
                             
                     }

@@ -1,6 +1,7 @@
 ﻿using MapProgressionSimulator.Domain;
-using MapProgressionSimulator.Engine;
 using MapProgressionSimulator.Domain.Conditions;
+using MapProgressionSimulator.Engine;
+using System.Net.Sockets;
 
 
 var roomA = new Room("A");
@@ -14,7 +15,7 @@ var roomC = new Room("C");
 //);
 roomA.Connections.Add(new Connection(roomB, new HasPowerCondition("Dash")));
 roomB.Connections.Add(new Connection(roomC));
-//roomC.Connections.Add(new Connection(roomA));
+//roomC.Connections.Add(new Connection(roomB));
 
 roomC.PowerGiven = "Dash";
 
@@ -29,24 +30,14 @@ var reachable = explorer.Explore(allRooms, state);
 var detector = new SoftLockDetector();
 var locked = detector.FindSoftLocks(allRooms, reachable);
 
+var visualizer = new GraphVisualizer();
+visualizer.Print(allRooms, state, reachable);
+
 Console.WriteLine("=== SOFT LOCK REPORT ===");
 
-if (locked.Count == 0)
-{
-    Console.WriteLine("OK: no soft-lock detected");
-}
-else
-{
-    Console.WriteLine("Locked rooms:");
-    foreach (var r in locked)
-        Console.WriteLine(r);
-}
-
-var result = explorer.Explore(allRooms, state);
-
-Console.WriteLine("Rooms accessibles :");
-
-foreach (var r in result)
-{
-    Console.WriteLine(r);
-}
+//[ACCESSIBLE] → room atteinte
+//[LOCKED] → jamais atteinte
+//----> → passage possible
+//-X-> → passage bloqué
+//(OK) → cible accessible
+//(LOCKED) → cible inaccessible
