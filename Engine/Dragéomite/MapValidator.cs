@@ -7,31 +7,53 @@ using System.Threading.Tasks;
 
 namespace MapProgressionSimulator.Engine.Dragéomite
 {
-    public class MapValidator
+public class MapValidator
+{
+    public bool IsMapValid(Dictionary<string, Case> rooms, Case start)
     {
-        public bool IsMapValid(Dictionary<string, Case> rooms, Case start)
+        var visited = GetVisitedRooms(start);
+
+        bool isValid = visited.Count == rooms.Count;
+
+        // 🔴 affichage des salles isolées
+        var isolated = rooms.Values.Where(r => !visited.Contains(r));
+
+        if (isolated.Any())
         {
-            HashSet<Case> visited = new HashSet<Case>();
-            Queue<Case> queue = new Queue<Case>();
+            Console.WriteLine("Salles isolées détectées :");
 
-            queue.Enqueue(start);
-            visited.Add(start);
-
-            while (queue.Count > 0)
+            foreach (var room in isolated)
             {
-                var current = queue.Dequeue();
+                Console.WriteLine($" - {room.Name}");
+            }
+        }
 
-                foreach (var neighbor in current.AdjacentCases.Values)
+        return isValid;
+    }
+
+    private HashSet<Case> GetVisitedRooms(Case start)
+    {
+        HashSet<Case> visited = new HashSet<Case>();
+        Queue<Case> queue = new Queue<Case>();
+
+        queue.Enqueue(start);
+        visited.Add(start);
+
+        while (queue.Count > 0)
+        {
+            var current = queue.Dequeue();
+
+            foreach (var neighbor in current.AdjacentCases.Values)
+            {
+                if (neighbor != null && !visited.Contains(neighbor))
                 {
-                    if (neighbor != null && !visited.Contains(neighbor))
-                    {
-                        visited.Add(neighbor);
-                        queue.Enqueue(neighbor);
-                    }
+                    visited.Add(neighbor);
+                    queue.Enqueue(neighbor);
                 }
             }
-
-            return visited.Count == rooms.Count;
         }
+
+        return visited;
     }
+}
 }

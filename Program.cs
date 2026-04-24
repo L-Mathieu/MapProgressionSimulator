@@ -48,36 +48,35 @@ using System.Net.Sockets;
 var roomA = new Case { Name = "A" };
 var roomB = new Case { Name = "B" };
 var roomC = new Case { Name = "C" };
+var roomD = new Case { Name = "D" };
 
 roomA.AdjacentCases["Right"] = roomB;
 roomB.AdjacentCases["Left"] = roomA;
 
 roomB.AdjacentCases["Right"] = roomC;
 roomC.AdjacentCases["Left"] = roomB;
+
+roomB.AdjacentCases["Bottom"] = roomD;
+roomD.AdjacentCases["Top"] = roomB;
+
 roomC.AdjacentCases["Right"] = null;
 
 var rooms = new Dictionary<string, Case>
 {
     { "A", roomA },
     { "B", roomB },
-    { "C", roomC }
+    { "C", roomC },
+    { "D", roomD },
 };
 
-foreach (var room in rooms.Values)
-{
-    Console.WriteLine($"Room {room.Name}");
+//var validator = new MapValidator();
 
-    foreach (var kvp in room.AdjacentCases)
-    {
-        if (kvp.Value != null)
-        {
-            Console.WriteLine($"  {kvp.Key} -> {kvp.Value.Name}");
-        }
-    }
-}
+//bool isValid = validator.IsMapValid(rooms, roomA);
 
-var validator = new MapValidator();
+//Console.WriteLine($"Map valide : {isValid}");
 
-bool isValid = validator.IsMapValid(rooms, roomA);
+var printer = new MapPrinter();
+printer.Print(rooms, roomA);
 
-Console.WriteLine($"Map valide : {isValid}");
+var printer2D = new MapPrinter2D();
+printer2D.Print(rooms, roomA);
