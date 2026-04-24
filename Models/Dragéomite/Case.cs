@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapProgressionSimulator.Models
+namespace MapProgressionSimulator.Models.Dragéomite
 {
     public class Case
     {
