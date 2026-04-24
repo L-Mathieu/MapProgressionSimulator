@@ -15,6 +15,7 @@ var roomC = new Room("C");
 //);
 roomA.Connections.Add(new Connection(roomB, new HasPowerCondition("Dash")));
 roomB.Connections.Add(new Connection(roomC));
+roomB.Connections.Add(new Connection(roomA));
 //roomC.Connections.Add(new Connection(roomB));
 
 roomC.PowerGiven = "Dash";
@@ -22,6 +23,7 @@ roomC.PowerGiven = "Dash";
 var allRooms = new List<Room> { roomA, roomB, roomC };
 
 var state = new PlayerState();
+
 
 var explorer = new Explorer();
 

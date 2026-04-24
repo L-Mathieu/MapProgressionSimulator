@@ -19,5 +19,13 @@ namespace MapProgressionSimulator.Domain
         {
             return Powers.Contains(power);
         }
+
+        public void ShowPower()
+        {
+            foreach (var power in Powers)
+            {
+                Console.WriteLine(power);
+            }
+        }
     }
 }
