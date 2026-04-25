@@ -1,4 +1,5 @@
-﻿using MapProgressionSimulator.Models.Dragéomite;
+﻿using MapProgressionSimulator.Domain;
+using MapProgressionSimulator.Models.Dragéomite;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -55,5 +56,36 @@ public class MapValidator
 
         return visited;
     }
-}
+
+        public bool IsBossReachable(Case startRoom, Case bossRoom)
+        {
+            Queue<Case> queue = new Queue<Case>();
+            HashSet<Case> visited = new HashSet<Case>();
+
+            queue.Enqueue(startRoom);
+            visited.Add(startRoom);
+
+            while (queue.Count > 0)
+            {
+                Case current = queue.Dequeue();
+
+                if (current == bossRoom)
+                    return true;
+
+                foreach (Case neighbor in current.GetNeighbors())
+                {
+                    if (neighbor == null)
+                        continue;
+
+                    if (visited.Contains(neighbor))
+                        continue;
+
+                    visited.Add(neighbor);
+                    queue.Enqueue(neighbor);
+                }
+            }
+
+            return false;
+        }
+    }
 }

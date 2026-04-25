@@ -17,6 +17,14 @@ namespace MapProgressionSimulator.Models.Dragéomite
             { "Right", null },
             { "Top", null },
             { "Bottom", null }
-            };
+        };
+
+        public List<Case> GetNeighbors()
+        {
+            return AdjacentCases.Values
+                .Where(c => c != null)
+                .Select(c => c!)
+                .ToList();
+        }
     }
 }

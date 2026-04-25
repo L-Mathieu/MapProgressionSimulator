@@ -80,3 +80,7 @@ printer.Print(rooms, roomA);
 
 var printer2D = new MapPrinter2D();
 printer2D.Print(rooms, roomA);
+
+var validator = new MapValidator();
+bool isBossReachable = validator.IsBossReachable(roomA, roomD);
+Console.WriteLine($"Boss reachable : {isBossReachable}");
